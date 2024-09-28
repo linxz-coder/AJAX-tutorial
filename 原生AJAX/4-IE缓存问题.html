@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IE缓存问题</title>
+    <style>
+        #result{
+            width: 200px;
+            height: 100px;
+            border: solid 1px #258;
+        }
+    </style>
+</head>
+<body>
+    <h1>IE缓存问题</h1>
+    <p>IE浏览器会对GET请求进行缓存，如果请求的url相同，IE会直接从缓存中获取数据，而不会发送请求。</p>
+    <p>对时效性比较重要的数据，可能有影响。</p>
+    <p>解决方法：在url后面加上一个时间戳，保证每次请求的url都不一样。</p>
+    <button>点击发送请求</button>
+    <div id="result"></div>
+    <script>
+        const btn = document.querySelector('button');
+        const result = document.querySelector('#result');
+
+        btn.addEventListener('click', function(){
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://127.0.0.1:8000/ie?t='+Date.now(), true);
+            xhr.send();
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300){
+                    result.innerHTML = xhr.response;
+                }
+            }
+        });
+
+    </script>
+    
+</body>
+</html>

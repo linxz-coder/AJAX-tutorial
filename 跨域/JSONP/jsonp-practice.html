@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>案例</title>
+</head>
+<body>
+    用户名：<input type="text" id="username">
+    <p></p>
+
+    <script>
+        // 获取input元素
+        const input = document.getElementById('username')
+
+        // 声明handle函数
+        function handle(data) {
+            input.style.border = '1px solid red'
+            // 修改p标签的提示文本
+            document.querySelector('p').innerText = data.msg
+        }
+
+        // 绑定事件
+        input.onblur = function () {
+            // 获取用户输入值
+            let username = this.value
+            // 向服务器发送请求 检测用户名是否存在
+            // 1. 创建script标签
+            const script = document.createElement('script')
+            // 2. 设置script标签的src属性
+            script.src = 'http://127.0.0.1:8000/check-username'
+            // 3. 将script标签添加到body中
+            document.body.appendChild(script)
+        }
+    </script>
+</body>
+</html>
